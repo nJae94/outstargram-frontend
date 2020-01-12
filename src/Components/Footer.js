@@ -1,6 +1,9 @@
 import React from "react";
 import styled from "styled-components";
 
+// Footer 페이지 페이지 하단 링크 아직 연결은 안하고 표시만
+
+//가로축 space-between
 const Footer = styled.footer`
   display: flex;
   justify-content: space-between;

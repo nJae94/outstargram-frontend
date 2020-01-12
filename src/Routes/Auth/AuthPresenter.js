@@ -3,7 +3,6 @@ import styled from "styled-components";
 import Input from "../../Components/Input";
 import Button from "../../Components/Button";
 
-//총 배경
 const Wrapper = styled.div`
   min-height: 80vh;
   display: flex;
@@ -54,17 +53,18 @@ export default ({
   lastName,
   email,
   setAction,
-  onSubmit
+  onSubmit,
+  secret
 }) => (
   <Wrapper>
     <Form>
-        {/* action 값에 따라 다른 form 보여줌 */}
-      {action === "logIn" ? (
+      {action === "logIn" && (
         <form onSubmit={onSubmit}>
           <Input placeholder={"Email"} {...email} type="email" />
           <Button text={"Log in"} />
         </form>
-      ) : (
+      )}
+      {action === "signUp" && (
         <form onSubmit={onSubmit}>
           <Input placeholder={"First name"} {...firstName} />
           <Input placeholder={"Last name"} {...lastName} />
@@ -73,8 +73,16 @@ export default ({
           <Button text={"Sign up"} />
         </form>
       )}
+      {action === "confirm" && (
+        <form onSubmit={onSubmit}>
+          <Input placeholder="Paste your secret" required {...secret} />
+          <Button text={"Confirm"} />
+        </form>
+      )}
     </Form>
-    <StateChanger>
+    
+    {action !== "confirm" && (
+      <StateChanger>
       {action === "logIn" ? (
         <>
           Don't have an account?{" "}
@@ -87,5 +95,6 @@ export default ({
         </>
       )}
     </StateChanger>
+    )}
   </Wrapper>
 );
