@@ -6,5 +6,10 @@ export default new ApolloClient({
   clientState: {
     defaults,
     resolvers
+  },
+  // 토큰이 있을 때 토큰을 request해주는 것 
+  headers: {
+                            //캐시에 저장된 토큰이란는 이름의 값 전달
+    Authorization: `Bearer ${localStorage.getItem("token")}`
   }
 });
