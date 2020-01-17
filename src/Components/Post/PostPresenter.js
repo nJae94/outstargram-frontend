@@ -130,7 +130,6 @@ export default ({
   onKeyUp,
   comments,
   selfComments,
-  setTime
 }) => (
   <Post>
     <Header>
@@ -176,7 +175,7 @@ export default ({
         </Comments>
       )}
 
-          <Timestamp>{createdAt}{setTime}</Timestamp>
+      <Timestamp>{createdAt}</Timestamp>
 
         <Textarea placeholder={"댓글 달기..."}
          value={newComment.value} 

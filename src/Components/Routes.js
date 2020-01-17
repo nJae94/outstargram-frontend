@@ -5,7 +5,7 @@ import Auth from "../Routes/Auth";
 import Feed from "../Routes/Feed";
 import Explore from "../Routes/Explore";
 import Profile from "../Routes/Profile";
-import Search from "../Routes/Search"
+import Search from "../Routes/Search/index"
 
 
 //로그인 했을 때 라우터
