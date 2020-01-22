@@ -19,7 +19,8 @@ export const defaults = {
       logUserOut: (_, __, { cache }) => {
           //토큰 지우기
         localStorage.removeItem("token");
-        window.location.reload();
+        //로그아웃 시 reload가 아닌 /.로 이동
+        window.location= "/";
         return null;
       }
     }
