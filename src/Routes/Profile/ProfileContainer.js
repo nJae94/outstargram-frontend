@@ -37,6 +37,8 @@ export const LOG_OUT = gql`
 
 export default withRouter(({ match: { params: { username } } }) => {
   const { data, loading } = useQuery(GET_USER, { variables: { username } });
+
+  console.log(data);
   const [logOut] = useMutation(LOG_OUT);
   return <ProfilePresenter loading={loading} logOut={logOut}data={data} />;
 });
