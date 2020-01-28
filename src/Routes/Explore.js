@@ -5,6 +5,7 @@ import styled from "styled-components";
 import Loader from "../Components/Loader";
 import FollowButton from "../Components/FollowButton";
 import { Link } from "react-router-dom";
+import { HeartFull } from "../Components/Icons";
 
 const Wrapper = styled.div`
   min-height: 100vh;
@@ -65,6 +66,53 @@ const ButtonDiv = styled.div`
     padding: 9px 5px;
 `;
 
+const Overlay = styled.div`
+  background-color: rgba(0, 0, 0, 0.6);
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  transition: opacity 0.3s linear;
+  svg {
+    fill: white;
+  }
+`;
+
+const Posts = styled.div`
+
+  display: grid;
+  grid-template-columns: repeat(3, 237px);
+  grid-template-rows: repeat(3, 237px);
+  grid-gap:30px;
+`;
+
+const Post = styled.div`
+  
+  background-image: url(${props => props.src});
+  background-size: 100% 100%
+  cursor: pointer;
+  &:hover {
+    ${Overlay} {
+      opacity: 1;
+    }
+  }
+`;
+const Number = styled.div`
+  color: white;
+  display: flex;
+  align-items: center;
+  &:first-child {
+    margin-right: 30px;
+  }
+`;
+
+const NumberText = styled.span`
+  margin-left: 10px;
+  font-size: 16px;
+`;
+
 const ALL_USER = gql`
 {
     allUsers {
@@ -91,7 +139,7 @@ const ALL_USER = gql`
 export default () => {
 
     const {data, loading} = useQuery(ALL_USER);
-
+    
     if (loading === true) {
         return (
           <Wrapper>
@@ -99,7 +147,27 @@ export default () => {
           </Wrapper>
         );
       } else if (!loading && data && data.allUsers) {
+        
 
+        const { allUsers } = data;
+        let posts = [];
+        let counts = [];
+        for(let i in allUsers)
+        {
+            for(let j in allUsers[i].posts)
+            {
+                for(let k in allUsers[i].posts[j].files)
+                { 
+                    const {likeCount} = allUsers[i].posts[j];
+                    const target = {likeCount: likeCount};
+                    
+                    allUsers[i].posts[j].files[k] = Object.assign(target,allUsers[i].posts[j].files[k]);
+
+                    posts.push(allUsers[i].posts[j].files[k]);
+                }
+            }
+        }
+      // console.log(posts);
         return (
             <Wrapper>
                 <Title>팔로우할 만한 계정 둘러보기</Title>
@@ -119,12 +187,26 @@ export default () => {
                             <ContainerColumn>
                                 <ButtonDiv>
                             
-                                 {user.isSelf ? null : <FollowButton isFollowing={user.isFollowing} id={user.id} />}
+                                 {user.isSelf ? null : <FollowButton isFollowing={user.isFollowing} id={user.id} key={user.id} />}
                                  </ButtonDiv>
                             </ContainerColumn>
                         </Container>
                    ) )}
                 </Followdiv>
+                <Title>탐색 탭</Title>
+                <Posts>
+                    {posts && posts.map((post) => (
+                        <Post src={post.url} key={post.id} >
+                            <Overlay>
+                            <Number>
+                                <HeartFull />
+                                <NumberText>{post.likeCount}</NumberText>
+                            </Number>
+                            </Overlay>
+                        </Post>
+
+                    ))}
+                </Posts>
             </Wrapper>
         )
         
