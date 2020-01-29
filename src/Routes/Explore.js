@@ -187,7 +187,7 @@ export default () => {
                             <ContainerColumn>
                                 <ButtonDiv>
                             
-                                 {user.isSelf ? null : <FollowButton isFollowing={user.isFollowing} id={user.id} key={user.id} />}
+                                 {user.isSelf ? null : <FollowButton isFollowing={user.isFollowing} id={user.id} />}
                                  </ButtonDiv>
                             </ContainerColumn>
                         </Container>
@@ -196,7 +196,7 @@ export default () => {
                 <Title>탐색 탭</Title>
                 <Posts>
                     {posts && posts.map((post) => (
-                        <Post src={post.url} key={post.id} >
+                        <Post src={post.url} >
                             <Overlay>
                             <Number>
                                 <HeartFull />
