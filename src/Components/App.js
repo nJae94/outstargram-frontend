@@ -17,6 +17,7 @@ const QUERY = gql`
   }
 `;
 
+//margin 0 auto는 위아래 공백 없이 가운데 위치
 const Wrapper = styled.div`
   margin: 0 auto;
   max-width: ${props => props.theme.maxWidth};
